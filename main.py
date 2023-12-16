@@ -18,4 +18,15 @@ while cap.isOpened():
     if cv2.waitKey(1) & 0xFF == ord('q') or not ret:
         break
 
-    cv2.imshow("Hands", frame)
+    imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    image_for_detection = mp.Image(image_format=mp.ImageFormat.SRGB, data=imgRGB)
+    detection_result = detector.detect(image_for_detection)
+
+    if len(detection_result.face_landmarks):
+        for point in detection_result.face_landmarks[0]:
+            x_tip = int(point.x * imgRGB.shape[1])
+            y_tip = int(point.y * imgRGB.shape[0])
+            cv2.circle(imgRGB,(x_tip, y_tip), 1, (0, 255, 0), -1)
+
+    res_image = cv2.cvtColor(imgRGB, cv2.COLOR_RGB2BGR)
+    cv2.imshow("Hands", res_image)
