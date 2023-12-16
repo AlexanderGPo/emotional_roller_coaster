@@ -11,3 +11,11 @@ options = vision.FaceLandmarkerOptions(base_options=base_options,
                                        output_facial_transformation_matrixes=True,
                                        num_faces=1)
 detector = vision.FaceLandmarker.create_from_options(options)
+
+cap = cv2.VideoCapture(0)
+while cap.isOpened():
+    ret, frame = cap.read()
+    if cv2.waitKey(1) & 0xFF == ord('q') or not ret:
+        break
+
+    cv2.imshow("Hands", frame)
