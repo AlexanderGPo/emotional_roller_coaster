@@ -32,14 +32,17 @@ while cap.isOpened():
         if is_front_face(detection_result.face_landmarks[0]):
             FACE_COLOR = (0, 255, 0)
 
+            if is_surprised(detection_result.face_landmarks[0]):
+                print("surprised")
+
         else:
             FACE_COLOR = (255, 0, 0)
+
         for point in detection_result.face_landmarks[0]:
             x_tip = int(point.x * imgRGB.shape[1])
             y_tip = int(point.y * imgRGB.shape[0])
             cv2.circle(imgRGB, (x_tip, y_tip), 1, FACE_COLOR, -1)
     else:
-        cv2.putText(imgRGB, emoji.emojize('No face :('), (50, 50), cv2.FONT_HERSHEY_SIMPLEX,
-                    1, (0, 255, 0),2, cv2.LINE_AA)
+        print("no face")
     res_image = cv2.cvtColor(imgRGB, cv2.COLOR_RGB2BGR)
     cv2.imshow("Hands", res_image)
