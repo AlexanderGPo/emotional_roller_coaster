@@ -37,3 +37,12 @@ def is_happy(face_landmarks: list):
         return True
     else:
         return False
+
+
+def is_sceptic(face_landmarks: list):
+    if (find_difference(face_landmarks, 52, 295, 'y') > (EPS / 10) >
+            find_difference(face_landmarks, 78, 14, 'y')
+            and find_difference(face_landmarks, 306, 14, 'y') < (EPS / 10)):
+        return True
+    else:
+        return False

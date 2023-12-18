@@ -39,6 +39,9 @@ while cap.isOpened():
             if is_happy(detection_result.face_landmarks[0]):
                 print("happy")
 
+            if is_sceptic(detection_result.face_landmarks[0]):
+                print("sceptic")
+
         else:
             FACE_COLOR = (255, 0, 0)
 
