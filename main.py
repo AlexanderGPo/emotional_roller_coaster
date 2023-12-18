@@ -5,8 +5,6 @@ import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 
-import emoji
-
 from sources.detecting_emotions import*
 
 FACE_COLOR = (0, 255, 0)
