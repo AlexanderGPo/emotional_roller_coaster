@@ -47,10 +47,9 @@ while cap.isOpened():
             FACE_COLOR = (255, 0, 0)
 
         for index, point in enumerate(detection_result.face_landmarks[0]):
-            if index == 334 or index == 105:
-                x_tip = int(point.x * imgRGB.shape[1])
-                y_tip = int(point.y * imgRGB.shape[0])
-                cv2.circle(imgRGB, (x_tip, y_tip), 1, FACE_COLOR, -1)
+            x_tip = int(point.x * imgRGB.shape[1])
+            y_tip = int(point.y * imgRGB.shape[0])
+            cv2.circle(imgRGB, (x_tip, y_tip), 1, FACE_COLOR, -1)
     else:
         print("no face")
     res_image = cv2.cvtColor(imgRGB, cv2.COLOR_RGB2BGR)

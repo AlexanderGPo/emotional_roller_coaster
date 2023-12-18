@@ -20,6 +20,7 @@ Simple **game**, where you should fast **mimic** some emotions, that program "ga
 1. Copy the repository into local path:
     ```bash
    git clone https://github.com/AlexanderGPo/emotional_roller_coaster
+   cd emotional_roller_coaster
    ```
 2. Install necessary libraries:
    ```bash
@@ -27,7 +28,7 @@ Simple **game**, where you should fast **mimic** some emotions, that program "ga
    ```
 3. Start and have fun! =D
    ```bash
-   main.py
+   python main.py
    ```
 
 ## Usage
