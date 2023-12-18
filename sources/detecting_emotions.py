@@ -12,7 +12,8 @@ def find_difference(face_landmarks: list, index_1, index_2, axis):
 
 def is_front_face(face_landmarks: list):
     if (find_difference(face_landmarks, 234, 454, 'z') > EPS or
-            find_difference(face_landmarks, 10, 152, 'z') > EPS):
+            find_difference(face_landmarks, 10, 152, 'z') > EPS or
+            find_difference(face_landmarks, 10, 152, 'x') > (EPS / 2)):
         return False
     return True
 
@@ -40,16 +41,19 @@ def is_happy(face_landmarks: list):
 
 
 def is_sceptic(face_landmarks: list):
-    if (find_difference(face_landmarks, 52, 295, 'y') > (EPS / 10) >
-            find_difference(face_landmarks, 78, 14, 'y')
-            and find_difference(face_landmarks, 306, 14, 'y') < (EPS / 10)):
+    if (find_difference(face_landmarks, 105, 334, 'y') > (EPS / 5)
+            and find_difference(face_landmarks, 78, 14, 'y') < (EPS / 20)
+            and find_difference(face_landmarks, 306, 14, 'y') < (EPS / 20)):
         return True
     else:
         return False
 
 
 def is_suspicious(face_landmarks: list):
-    if False:
+    if (find_difference(face_landmarks, 159, 145, 'y') /
+            find_difference(face_landmarks, 470, 472, 'y') < 0.3
+            and find_difference(face_landmarks, 78, 14, 'y') < (EPS / 20)
+            and find_difference(face_landmarks, 306, 14, 'y') < (EPS / 20)):
         return True
     else:
         return False
