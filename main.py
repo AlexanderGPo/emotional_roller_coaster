@@ -34,11 +34,15 @@ while cap.isOpened():
 
             if is_surprised(detection_result.face_landmarks[0]):
                 print("surprised")
+                cv2.putText(imgRGB, "surprised", (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+            if is_happy(detection_result.face_landmarks[0]):
+                print("happy")
 
         else:
             FACE_COLOR = (255, 0, 0)
 
-        for point in detection_result.face_landmarks[0]:
+        for index, point in enumerate(detection_result.face_landmarks[0]):
             x_tip = int(point.x * imgRGB.shape[1])
             y_tip = int(point.y * imgRGB.shape[0])
             cv2.circle(imgRGB, (x_tip, y_tip), 1, FACE_COLOR, -1)
