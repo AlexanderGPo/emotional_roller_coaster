@@ -26,6 +26,9 @@ Simple **game**, where you should fast **mimic** some emotions, that program "ga
    pip install -r requirements.txt
    ```
 3. Start and have fun! =D
+   ```bash
+   main.py
+   ```
 
 ## Usage
 _Gonna be here later_
