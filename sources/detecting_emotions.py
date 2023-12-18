@@ -46,3 +46,10 @@ def is_sceptic(face_landmarks: list):
         return True
     else:
         return False
+
+
+def is_suspicious(face_landmarks: list):
+    if False:
+        return True
+    else:
+        return False

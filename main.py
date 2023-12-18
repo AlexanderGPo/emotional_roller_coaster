@@ -42,6 +42,9 @@ while cap.isOpened():
             if is_sceptic(detection_result.face_landmarks[0]):
                 print("sceptic")
 
+            if is_suspicious(detection_result.face_landmarks[0]):
+                print("suspicious")
+
         else:
             FACE_COLOR = (255, 0, 0)
 
