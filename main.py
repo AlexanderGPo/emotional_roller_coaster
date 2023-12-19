@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
@@ -40,11 +39,12 @@ while cap.isOpened():
             if is_sceptic(detection_result.face_landmarks[0]):
                 print("sceptic")
 
-            if is_suspicious(detection_result.face_landmarks[0]):
-                print("suspicious")
+            if is_sad(detection_result.face_landmarks[0]):
+                print("sad")
 
         else:
             FACE_COLOR = (255, 0, 0)
+            print("bad face")
 
         for index, point in enumerate(detection_result.face_landmarks[0]):
             x_tip = int(point.x * imgRGB.shape[1])
@@ -53,4 +53,4 @@ while cap.isOpened():
     else:
         print("no face")
     res_image = cv2.cvtColor(imgRGB, cv2.COLOR_RGB2BGR)
-    cv2.imshow("Hands", res_image)
+    cv2.imshow("Emotional roller coaster", res_image)

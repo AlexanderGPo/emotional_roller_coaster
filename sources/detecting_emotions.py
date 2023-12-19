@@ -49,11 +49,10 @@ def is_sceptic(face_landmarks: list):
         return False
 
 
-def is_suspicious(face_landmarks: list):
-    if (find_difference(face_landmarks, 159, 145, 'y') /
-            find_difference(face_landmarks, 470, 472, 'y') < 0.3
-            and find_difference(face_landmarks, 78, 14, 'y') < (EPS / 20)
-            and find_difference(face_landmarks, 306, 14, 'y') < (EPS / 20)):
+def is_sad(face_landmarks: list):
+    if (not is_surprised(face_landmarks)
+            and (face_landmarks[78].y - face_landmarks[12].y > (EPS / 12))
+            and (face_landmarks[306].y - face_landmarks[12].y) > (EPS / 12)):
         return True
     else:
         return False
