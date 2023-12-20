@@ -33,6 +33,8 @@ GAME_STATUS = True
 RECOGNITION_STATUS = False
 TIME_FOR_EMOTION = 5000
 SCORE = 0
+PREV_BORDER = 0
+WRONG_ANS = 0
 CURRENT_EMOTION = -1
 EMOTIONS = ['surprised', 'happy', 'sceptic', 'sad']
 
@@ -44,6 +46,10 @@ while cap.isOpened() and GAME_STATUS:
             GAME_STATUS = False
         elif e.type == pygame.KEYDOWN:
             RECOGNITION_STATUS = True
+            TIME_FOR_EMOTION = 5000
+            SCORE = 0
+            PREV_BORDER = 0
+            WRONG_ANS = 0
             CURRENT_EMOTION = random.randint(1, 4)
 
     imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -71,8 +77,15 @@ while cap.isOpened() and GAME_STATUS:
 
                 if cur_status == CURRENT_EMOTION:
                     SCORE += 1
+                    if SCORE > PREV_BORDER + 10:
+                        TIME_FOR_EMOTION = max(500, TIME_FOR_EMOTION - 500)
+                        PREV_BORDER = SCORE
 
                 if now - last_update > TIME_FOR_EMOTION or cur_status == CURRENT_EMOTION:
+                    if cur_status != CURRENT_EMOTION:
+                        WRONG_ANS += 1
+                        if WRONG_ANS > 10:
+                            RECOGNITION_STATUS = False
                     last_update = now
                     temp = random.randint(1, 4)
                     while temp == CURRENT_EMOTION:
@@ -80,6 +93,7 @@ while cap.isOpened() and GAME_STATUS:
                     CURRENT_EMOTION = temp
         else:
             FACE_COLOR = (255, 0, 0)
+            RECOGNITION_STATUS = False
 
         if not RECOGNITION_STATUS:
             for index, point in enumerate(detection_result.face_landmarks[0]):
@@ -98,6 +112,9 @@ while cap.isOpened() and GAME_STATUS:
 
         cur_score = DAX_PRO_36.render(f'score is {SCORE}', True, (180, 0, 0))
         screen.blit(cur_score, (WIDTH - 200, 10))
+
+        cur_time = DAX_PRO_36.render(f'wrongs are {WRONG_ANS}', True, (180, 0, 0))
+        screen.blit(cur_time, (WIDTH - 200, 50))
 
     res_image = cv2.cvtColor(imgRGB, cv2.COLOR_RGB2BGR)
 
