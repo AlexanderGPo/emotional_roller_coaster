@@ -50,7 +50,8 @@ def is_sceptic(face_landmarks: list):
 
 
 def is_sad(face_landmarks: list):
-    if (not is_surprised(face_landmarks)
+    if (find_difference(face_landmarks, 0, 17, 'y') -
+            find_difference(face_landmarks, 78, 306, 'x') <= (EPS / 10)
             and (face_landmarks[78].y - face_landmarks[12].y > (EPS / 12))
             and (face_landmarks[306].y - face_landmarks[12].y) > (EPS / 12)):
         return True

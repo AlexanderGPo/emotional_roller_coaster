@@ -1,11 +1,11 @@
 import numpy as np
 import cv2
-import pygame as pg
+import pygame
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 
-from sources.detecting_emotions import*
+from sources.detecting_emotions import *
 
 FACE_COLOR = (0, 255, 0)
 
@@ -16,13 +16,27 @@ options = vision.FaceLandmarkerOptions(base_options=base_options,
                                        num_faces=1)
 detector = vision.FaceLandmarker.create_from_options(options)
 
+GAME_STATUS = True
+
 cap = cv2.VideoCapture(0)
-while cap.isOpened():
+
+WIDTH = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Emotional roller-coaster")
+
+while cap.isOpened() and GAME_STATUS:
     ret, frame = cap.read()
-    if cv2.waitKey(1) & 0xFF == ord('q') or not ret:
-        break
+
+    for e in pygame.event.get():
+        if e.type == pygame.QUIT:
+            GAME_STATUS = False
 
     imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    surf_frame = pygame.surfarray.make_surface(np.rot90(imgRGB, 1))
+    screen.blit(pygame.transform.flip(surf_frame, True, False), (0, 0))
+
     image_for_detection = mp.Image(image_format=mp.ImageFormat.SRGB, data=imgRGB)
     detection_result = detector.detect(image_for_detection)
 
@@ -32,7 +46,6 @@ while cap.isOpened():
 
             if is_surprised(detection_result.face_landmarks[0]):
                 print("surprised")
-                cv2.putText(imgRGB, "surprised", (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
             if is_happy(detection_result.face_landmarks[0]):
                 print("happy")
@@ -53,5 +66,9 @@ while cap.isOpened():
             cv2.circle(imgRGB, (x_tip, y_tip), 1, FACE_COLOR, -1)
     else:
         print("no face")
+
     res_image = cv2.cvtColor(imgRGB, cv2.COLOR_RGB2BGR)
-    cv2.imshow("Emotional roller coaster", res_image)
+
+    pygame.display.flip()
+    pygame.display.update()
+
