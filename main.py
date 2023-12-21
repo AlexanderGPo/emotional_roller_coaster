@@ -5,11 +5,9 @@ import pygame
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
-
 from sources.detecting_emotions import *
-from sources.visual_aids import *
 
-FACE_COLOR = (0, 255, 0)
+pygame.font.init()
 
 base_options = python.BaseOptions(model_asset_path='sources/face_landmarker_v2_with_blendshapes.task')
 options = vision.FaceLandmarkerOptions(base_options=base_options,
@@ -36,6 +34,10 @@ SCORE = 0
 PREV_BORDER = 0
 WRONG_ANS = 0
 CURRENT_EMOTION = -1
+
+DAX_PRO_36 = pygame.font.Font('sources/dax_pro_font.ttf', 36)
+
+FACE_COLOR = (0, 255, 0)
 
 while cap.isOpened() and GAME_STATUS:
     ret, frame = cap.read()
@@ -125,8 +127,8 @@ while cap.isOpened() and GAME_STATUS:
     else:
         emotion_surf = pygame.image.load(f'sources/img/emotion{CURRENT_EMOTION}.png')
         emotion_rect = emotion_surf.get_rect()
-        emotion_rect.centerx = WIDTH // 2
-        emotion_rect.top = 10
+        emotion_rect.centerx = WIDTH // 2 + 10
+        emotion_rect.top = 20
         screen.blit(emotion_surf, emotion_rect)
 
         score_surf = pygame.image.load('sources/img/good_ans.png')
