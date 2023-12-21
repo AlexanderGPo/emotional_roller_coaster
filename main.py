@@ -5,7 +5,7 @@ import pygame
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
-from sources.detecting_emotions import *
+from sources.scripts.detecting_emotions import *
 
 pygame.font.init()
 
@@ -35,7 +35,7 @@ PREV_BORDER = 0
 WRONG_ANS = 0
 CURRENT_EMOTION = -1
 
-DAX_PRO_36 = pygame.font.Font('sources/dax_pro_font.ttf', 36)
+DAX_PRO_36 = pygame.font.Font('sources/fonts/dax_pro_font.ttf', 36)
 
 FACE_COLOR = (0, 255, 0)
 
@@ -112,6 +112,8 @@ while cap.isOpened() and GAME_STATUS:
         no_face_rect_2.centery = HEIGHT // 2
         screen.blit(no_face_surf_1, no_face_rect_1)
         screen.blit(no_face_surf_2, no_face_rect_2)
+
+        RECOGNITION_STATUS = False
 
     if not RECOGNITION_STATUS:
         info_surf = pygame.image.load('sources/img/keyboard.png')

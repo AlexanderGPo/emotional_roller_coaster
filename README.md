@@ -12,9 +12,9 @@ Simple **game**, where you should fast **mimic** some emotions, that program "ga
 - Practising for actors
 
 ### Features
-- Based on Mediapipe and OpenCV
+- Based on Mediapipe, Pygame and OpenCV
 - Created on Python
-- Detection face _landmarks_
+- Detection face-landmarks
 
 ## Installation
 1. Copy the repository into local path:
@@ -32,7 +32,16 @@ Simple **game**, where you should fast **mimic** some emotions, that program "ga
    ```
 
 ## Usage
-_Gonna be here later_
+1. Open ```main.py``` file and make sure that your face are "green": 
+don't be too far from the camera and try to put your face in parallel.
+with the screen of device (laptop).
+2. Tap any key.
+3. Mimic the emotion that program gave to you (emoji in top of the screen),
+try to copy from emoji as many features as you can. And do it fast! You have only about 5 seconds.
+4. Get one "score" or "wrongs" and continue the process.
+5. Program will be stopped after 10 wrong answers.
+6. Time for each emotion is going to be less and less, so be as fast as you can.
+7. Don't shake your hand! Or detector will lost you and you will have to start from the beginning.
 
 ## Status
-In development.
+Released.
