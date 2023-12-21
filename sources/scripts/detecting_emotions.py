@@ -1,7 +1,7 @@
 EPS = 0.1
 
 
-def find_difference(face_landmarks: list, index_1, index_2, axis):
+def find_difference(face_landmarks: list, index_1, index_2, axis) -> int:
     if axis == "x":
         return abs(face_landmarks[index_1].x - face_landmarks[index_2].x)
     if axis == "y":
@@ -10,7 +10,7 @@ def find_difference(face_landmarks: list, index_1, index_2, axis):
         return abs(face_landmarks[index_1].z - face_landmarks[index_2].z)
 
 
-def is_front_face(face_landmarks: list):
+def is_front_face(face_landmarks: list) -> bool:
     if (find_difference(face_landmarks, 234, 454, 'z') > EPS or
             find_difference(face_landmarks, 10, 152, 'z') > EPS or
             find_difference(face_landmarks, 10, 152, 'x') > (EPS / 2)):
@@ -18,7 +18,7 @@ def is_front_face(face_landmarks: list):
     return True
 
 
-def is_surprised(face_landmarks: list):
+def is_surprised(face_landmarks: list) -> bool:
     if (find_difference(face_landmarks, 0, 17, 'y') -
             find_difference(face_landmarks, 78, 306, 'x') > (EPS / 5)
             and (find_difference(face_landmarks, 33, 155, 'x') /
@@ -30,7 +30,7 @@ def is_surprised(face_landmarks: list):
         return False
 
 
-def is_happy(face_landmarks: list):
+def is_happy(face_landmarks: list) -> bool:
     if ((find_difference(face_landmarks, 78, 306, 'x') /
          find_difference(face_landmarks, 98, 460, 'x')) > 1.65
             and (face_landmarks[78].y < face_landmarks[12].y)
@@ -40,7 +40,7 @@ def is_happy(face_landmarks: list):
         return False
 
 
-def is_sceptic(face_landmarks: list):
+def is_sceptic(face_landmarks: list) -> bool:
     if (find_difference(face_landmarks, 105, 334, 'y') > (EPS / 5)
             and find_difference(face_landmarks, 78, 14, 'y') < (EPS / 20)
             and find_difference(face_landmarks, 306, 14, 'y') < (EPS / 20)):
@@ -49,7 +49,7 @@ def is_sceptic(face_landmarks: list):
         return False
 
 
-def is_sad(face_landmarks: list):
+def is_sad(face_landmarks: list) -> bool:
     if (find_difference(face_landmarks, 0, 17, 'y') -
             find_difference(face_landmarks, 78, 306, 'x') <= (EPS / 10)
             and (face_landmarks[78].y - face_landmarks[12].y > (EPS / 12))
