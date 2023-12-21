@@ -36,7 +36,6 @@ SCORE = 0
 PREV_BORDER = 0
 WRONG_ANS = 0
 CURRENT_EMOTION = -1
-EMOTIONS = ['surprised', 'happy', 'sceptic', 'sad']
 
 while cap.isOpened() and GAME_STATUS:
     ret, frame = cap.read()
@@ -101,20 +100,54 @@ while cap.isOpened() and GAME_STATUS:
                 y_tip = int(point.y * imgRGB.shape[0])
                 pygame.draw.circle(screen,  FACE_COLOR, (x_tip, y_tip), 1)
     else:
-        print("no face")
+        no_face_surf_1 = pygame.image.load('sources/img/no.png')
+        no_face_rect_1 = no_face_surf_1.get_rect()
+        no_face_rect_1.right = WIDTH // 2 - 10
+        no_face_rect_1.centery = HEIGHT // 2
+        no_face_surf_2 = pygame.image.load('sources/img/face.png')
+        no_face_rect_2 = no_face_surf_2.get_rect()
+        no_face_rect_2.left = WIDTH // 2 + 10
+        no_face_rect_2.centery = HEIGHT // 2
+        screen.blit(no_face_surf_1, no_face_rect_1)
+        screen.blit(no_face_surf_2, no_face_rect_2)
 
     if not RECOGNITION_STATUS:
-        status = DAX_PRO_36.render("tap to start", True, (180, 0, 0))
-        screen.blit(status, (WIDTH // 2 - 20, 10))
+        info_surf = pygame.image.load('sources/img/keyboard.png')
+        info_rect_1 = info_surf.get_rect()
+        info_rect_1.right = WIDTH // 2 - 100
+        info_rect_2 = info_surf.get_rect()
+        info_rect_2.centerx = WIDTH // 2
+        info_rect_3 = info_surf.get_rect()
+        info_rect_3.left = WIDTH // 2 + 100
+        screen.blit(info_surf, info_rect_1)
+        screen.blit(info_surf, info_rect_2)
+        screen.blit(info_surf, info_rect_3)
     else:
-        cur_emotion = DAX_PRO_36.render(f'new emotion {EMOTIONS[CURRENT_EMOTION - 1]}', True, (180, 0, 0))
-        screen.blit(cur_emotion, (10, 10))
+        emotion_surf = pygame.image.load(f'sources/img/emotion{CURRENT_EMOTION}.png')
+        emotion_rect = emotion_surf.get_rect()
+        emotion_rect.centerx = WIDTH // 2
+        emotion_rect.top = 10
+        screen.blit(emotion_surf, emotion_rect)
 
-        cur_score = DAX_PRO_36.render(f'score is {SCORE}', True, (180, 0, 0))
-        screen.blit(cur_score, (WIDTH - 200, 10))
+        score_surf = pygame.image.load('sources/img/good_ans.png')
+        score_surf = pygame.transform.scale(score_surf, (40, 40))
+        score_rect = score_surf.get_rect()
+        score_rect.left = WIDTH - 50
+        score_rect.top = 10
+        screen.blit(score_surf, score_rect)
 
-        cur_time = DAX_PRO_36.render(f'wrongs are {WRONG_ANS}', True, (180, 0, 0))
-        screen.blit(cur_time, (WIDTH - 200, 50))
+        wrongs_surf = pygame.image.load('sources/img/bad_ans.png')
+        wrongs_surf = pygame.transform.scale(wrongs_surf, (40, 40))
+        wrongs_rect = wrongs_surf.get_rect()
+        wrongs_rect.left = WIDTH - 50
+        wrongs_rect.top = 60
+        screen.blit(wrongs_surf, wrongs_rect)
+
+        score_text = DAX_PRO_36.render(str(SCORE), True, (136, 189, 75))
+        screen.blit(score_text, (WIDTH - 70 - 10 * len(str(SCORE)), 7))
+
+        wrongs_text = DAX_PRO_36.render(str(WRONG_ANS), True, (155, 64, 64))
+        screen.blit(wrongs_text, (WIDTH - 70 - 10 * len(str(WRONG_ANS)), 57))
 
     res_image = cv2.cvtColor(imgRGB, cv2.COLOR_RGB2BGR)
 
